@@ -16,12 +16,12 @@ func BatchCreateGundam(gundam []entity.GundamEntity) {
 	entity.DB.Omit("DeletedAt").Create(&gundam)
 }
 
-func GetGundamList(param dto.QueryGundamDTO, pagination dto.PaginationDTO) (gundam []entity.GundamEntity) {
+func GetGundamList(query dto.QueryGundamDTO) (gundam []entity.GundamEntity) {
 	db := entity.DB.Preload("Pilot", func(db *gorm.DB) *gorm.DB {
 		return db.Preload("Organization")
 	})
-	utils.LikeOrEqualQuery(db, param)
-	utils.Pagination(db, pagination.Page, pagination.PageSize)
+	utils.LikeOrEqualQuery(db, query)
+	utils.Pagination(db, query.Page, query.PageSize)
 	db.Find(&gundam)
 	return gundam
 }

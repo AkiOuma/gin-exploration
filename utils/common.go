@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"fmt"
 	"reflect"
 	"strconv"
 
@@ -40,12 +39,7 @@ func LikeOrEqualQuery(db *gorm.DB, param interface{}) {
 				}
 			case "string":
 				db.Where(name + " = " + "'" + values.Field(i).String() + "'")
-			default:
-				fmt.Print("type must be int or string")
 			}
-
-		default:
-			fmt.Print("Mode must be like or equal")
 		}
 	}
 }

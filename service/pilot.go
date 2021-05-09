@@ -6,11 +6,11 @@ import (
 	"gin-demo01/utils"
 )
 
-func GetPilotList(query dto.QueryPilotDTO, pagination dto.PaginationDTO) []entity.PilotEntity {
+func GetPilotList(query dto.QueryPilotDTO) []entity.PilotEntity {
 	var pilots []entity.PilotEntity
 	db := entity.DB.Preload("Organization").Preload("Gundam")
 	utils.LikeOrEqualQuery(db, query)
-	utils.Pagination(db, pagination.Page, pagination.PageSize)
+	utils.Pagination(db, query.Page, query.PageSize)
 	db.Find(&pilots)
 	return pilots
 }
